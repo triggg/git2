@@ -69,9 +69,6 @@ public class Aqua001 implements EntryPoint {
 			}
 		});
 		
-		
-		
-		
 	}
 	
 	private Widget getCenterPanel() {
