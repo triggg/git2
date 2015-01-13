@@ -1,0 +1,31 @@
+/** Add css rules here for your application. */
+/** Example rules used by the template application (remove for your app) */
+.sendButton {
+	display: block;
+	font-size: 16pt;
+}
+
+.serverResponseLabelError {
+	color: red;
+}
+
+#eastPanel {
+	background: rgba(245, 245, 245, 0.99);
+}
+
+#fullBackground {
+	background: #fafafa;
+}
+
+#captionLabel {
+	font-size: 14px;
+	font-weight: bolder;
+	color: #A6A3FF;
+}
+
+#valueLabel {
+	font-size: 14px;
+	font-weight: bolder;
+	color: #ED5980;
+}
+

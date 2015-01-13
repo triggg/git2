@@ -1,0 +1,2 @@
+serviceClass: ua.com.client.GreetingService
+path: F7120E2C2B850B1DBEB5C23BBD57779D.gwt.rpc
