@@ -1,5 +1,6 @@
 package ua.com.client;
 
+import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Plant;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -12,4 +13,6 @@ public interface GreetingServiceAsync {
 			throws IllegalArgumentException;
 
 	void getPlant(AsyncCallback<Plant> callback);
+
+	void getBonus(AsyncCallback<EveryDayBonus> callback);
 }

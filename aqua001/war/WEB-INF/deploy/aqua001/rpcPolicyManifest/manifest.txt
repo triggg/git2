@@ -1,3 +1,2 @@
 # Module aqua001
 # RPC service class, partial path of RPC policy file
-ua.com.client.GreetingService, F7120E2C2B850B1DBEB5C23BBD57779D.gwt.rpc
