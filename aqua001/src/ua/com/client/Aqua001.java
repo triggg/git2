@@ -8,8 +8,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -33,7 +35,7 @@ public class Aqua001 implements EntryPoint {
 			.create(GreetingService.class);
 	
 	PlantProgresDialog  plantDialog = new PlantProgresDialog();
-	
+		
 	/**
 	 * This is the entry point method.
 	 */
@@ -114,6 +116,14 @@ public class Aqua001 implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				plantDialog.center();
 				
+			}
+		});
+		
+		growButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {				
+				Window.alert("Plant grow succesfully!!!");				
 			}
 		});
 		//
