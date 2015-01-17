@@ -1,5 +1,6 @@
 package ua.com.client;
 
+import ua.com.client.dto.Planet;
 import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Plant;
 import ua.com.client.ui.PlantProgresDialog;
@@ -45,6 +46,7 @@ public class Aqua001 implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		initPlant();
+		initPlanet();
 		DockLayoutPanel mainDockPanel = new DockLayoutPanel(Unit.PX);
 		mainDockPanel.setWidth("100%");
 		mainDockPanel.setHeight("870px");
@@ -58,9 +60,41 @@ public class Aqua001 implements EntryPoint {
 		RootPanel.get().add(mainDockPanel);
 	}
 
-	private void initPlant() {
+		private void initPlanet() {
+			greetingService.getPlanet(new AsyncCallback<Planet>() {
+			@Override
+			public void onSuccess(Planet result) {				
+				Window.alert(toStringCustom(result));
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+	
+	private String toStringCustom(Planet planet) {
+		String resultStr = 
+			planet.getName() + "\n\n" +
+			planet.getParam0().toString() +"\n" + 
+			planet.getParam1().toString() +"\n" + 
+			planet.getParam2().toString() +"\n" + 
+			planet.getParam3().toString() +"\n" + 
+			planet.getParam4().toString() +"\n" + 
+			planet.getParam5().toString() +"\n" + 
+			planet.getParam6().toString() +"\n" + 
+			planet.getParam7().toString() +"\n" + 
+			planet.getParam8().toString() +"\n" + 
+			planet.getParam9().toString();
+		return resultStr;
+	}
 
-		greetingService.getPlant(new AsyncCallback<Plant>() {
+		private void initPlant() {
+			greetingService.getPlant(new AsyncCallback<Plant>() {
 
 			@Override
 			public void onSuccess(Plant result) {
@@ -160,6 +194,15 @@ public class Aqua001 implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				Window.alert("Plant grow succesfully!!!");
+			}
+		});
+		
+		sendButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.alert("Calculation ability of plant to "
+						+ "survive on the planet.... \n\n Succefuly!!!\\Failed!!!");
 			}
 		});
 
