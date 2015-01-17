@@ -1,8 +1,10 @@
 package ua.com.server;
 
 import ua.com.client.GreetingService;
+import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Planet;
 import ua.com.client.dto.Plant;
+import ua.com.server.factory.BonusFactory;
 import ua.com.server.factory.PlanetFactory;
 import ua.com.server.factory.PlantFactory;
 
@@ -24,6 +26,13 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Plant getPlant() {
 		return PlantFactory.getRandPlant();
+	}
+
+
+
+	@Override
+	public EveryDayBonus getBonus() {
+		return BonusFactory.getEveryDayBonus();
 	}
 	
 	@Override

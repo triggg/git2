@@ -1,6 +1,7 @@
 package ua.com.client;
 
 import ua.com.client.dto.Planet;
+import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Plant;
 import ua.com.client.ui.PlantProgresDialog;
 
@@ -28,15 +29,18 @@ public class Aqua001 implements EntryPoint {
 	private static final String GROW_BUT = "Рости";
 	private static final String SEND_BUT = "Лети";
 	private static final String PLAN_BUT = "Растение";
+	private static final String BONUS_BUT = "Бонус";
 
-	private static final String BUT_WIDTH = "100%";
+	private static final String WIDTH_100 = "100%";
 	private static final String BUT_HEIGHT = "40px";
 
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
-	
-	PlantProgresDialog  plantDialog = new PlantProgresDialog();
-		
+
+	private Label bonusLabel = new Label();
+
+	PlantProgresDialog plantDialog = new PlantProgresDialog();
+
 	/**
 	 * This is the entry point method.
 	 */
@@ -56,9 +60,8 @@ public class Aqua001 implements EntryPoint {
 		RootPanel.get().add(mainDockPanel);
 	}
 
-	private void initPlanet() {
-		greetingService.getPlanet(new AsyncCallback<Planet>() {
-			
+		private void initPlanet() {
+			greetingService.getPlanet(new AsyncCallback<Planet>() {
 			@Override
 			public void onSuccess(Planet result) {				
 				Window.alert(toStringCustom(result));
@@ -90,14 +93,28 @@ public class Aqua001 implements EntryPoint {
 		return resultStr;
 	}
 
-	private void initPlant(){
-		
-		greetingService.getPlant(new AsyncCallback<Plant>() {
-			
+		private void initPlant() {
+			greetingService.getPlant(new AsyncCallback<Plant>() {
+
 			@Override
 			public void onSuccess(Plant result) {
 				plantDialog.setDto(result);
-				
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		
+		greetingService.getBonus(new AsyncCallback<EveryDayBonus>() {
+			
+			@Override
+			public void onSuccess(EveryDayBonus result) {
+				bonusLabel.setText(result.getGoldBonus().toString());
 			}
 			
 			@Override
@@ -106,20 +123,33 @@ public class Aqua001 implements EntryPoint {
 				
 			}
 		});
-		
+
 	}
-	
+
 	private Widget getCenterPanel() {
-		
-		
+
 		DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.PX);
 		dockPanel.getElement().setId("fullBackground");
 		dockPanel.setWidth("800px");
 		dockPanel.setHeight("600px");
 
 		dockPanel.addWest(getButtonPanel(), 100);
+		dockPanel.addNorth(getBonusPanel(), 40);
 
 		return dockPanel;
+	}
+
+	private Widget getBonusPanel() {
+		HorizontalPanel hPanel = new HorizontalPanel();
+		hPanel.setSpacing(5);
+		bonusLabel.getElement().setId("valueLabel");
+
+		Label tempLabel = new Label(BONUS_BUT);
+		tempLabel.getElement().setId("captionLabel");
+		hPanel.add(tempLabel);
+		hPanel.add(bonusLabel);
+		hPanel.getElement().setId("eastPanel");
+		return hPanel;
 	}
 
 	private Widget getButtonPanel() {
@@ -127,45 +157,58 @@ public class Aqua001 implements EntryPoint {
 		verticalPanel.setWidth("100%");
 
 		verticalPanel.setSpacing(5);
-		
 
 		Button growButton = new Button(GROW_BUT);
 		Button sendButton = new Button(SEND_BUT);
 		Button plantButton = new Button(PLAN_BUT);
+		//Button bonusButton = new Button(BONUS_BUT);
 
-		growButton.setWidth(BUT_WIDTH);
+		growButton.setWidth(WIDTH_100);
 		growButton.setHeight(BUT_HEIGHT);
 
-		sendButton.setWidth(BUT_WIDTH);
+		sendButton.setWidth(WIDTH_100);
 		sendButton.setHeight(BUT_HEIGHT);
-		
-		plantButton.setWidth(BUT_WIDTH);
+
+		plantButton.setWidth(WIDTH_100);
 		plantButton.setHeight(BUT_HEIGHT);
+
+		//bonusButton.setWidth(WIDTH_100);
+		//bonusButton.setHeight(BUT_HEIGHT);
 
 		verticalPanel.add(growButton);
 		verticalPanel.add(sendButton);
 		verticalPanel.add(plantButton);
-		
+		//verticalPanel.add(bonusButton);
+
 		plantButton.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				plantDialog.center();
-				
+
 			}
 		});
-		
+
 		growButton.addClickHandler(new ClickHandler() {
-			
+
 			@Override
-			public void onClick(ClickEvent event) {				
-				Window.alert("Plant grow succesfully!!!");				
+			public void onClick(ClickEvent event) {
+				Window.alert("Plant grow succesfully!!!");
 			}
 		});
+
+		// bonusButton.addClickHandler(new ClickHandler() {
+		//
+		// @Override
+		// public void onClick(ClickEvent event) {
+		//
+		// }
+		// });
+
 		//
 		VerticalPanel returnPanel = new VerticalPanel();
-		returnPanel.setHeight("100%");
-		returnPanel.setWidth("100%");
+		returnPanel.setHeight(WIDTH_100);
+		returnPanel.setWidth(WIDTH_100);
 		returnPanel.getElement().setId("eastPanel");
 		returnPanel.setSpacing(1);
 		returnPanel.add(verticalPanel);
