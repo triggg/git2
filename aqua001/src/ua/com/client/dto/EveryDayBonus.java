@@ -14,6 +14,6 @@ public class EveryDayBonus implements IsSerializable, Serializable{
 
 	public void setGoldBonus(Integer goldBonus) {
 		this.goldBonus = goldBonus;
-	} 
+	}
 
 }

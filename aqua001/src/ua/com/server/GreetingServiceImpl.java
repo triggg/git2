@@ -4,8 +4,6 @@ import ua.com.client.GreetingService;
 import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Plant;
 import ua.com.server.factory.BonusFactory;
-import ua.com.server.factory.PlantFactory;
-import ua.com.shared.FieldVerifier;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -24,7 +22,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public Plant getPlant() {
-		return PlantFactory.getRandPlant();
+		return HardBase.getInstance().getPlant();
 	}
 
 
