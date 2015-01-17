@@ -196,6 +196,15 @@ public class Aqua001 implements EntryPoint {
 				Window.alert("Plant grow succesfully!!!");
 			}
 		});
+		
+		sendButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.alert("Calculation ability of plant to "
+						+ "survive on the planet.... \n\n Succefuly!!!\\Failed!!!");
+			}
+		});
 
 		// bonusButton.addClickHandler(new ClickHandler() {
 		//
