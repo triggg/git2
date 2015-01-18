@@ -1,5 +1,6 @@
 package ua.com.server;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import ua.com.client.dto.Plant;
@@ -28,6 +29,17 @@ public class HardBase {
 		user = UserFactory.getUserDTO();
 		//if currentDate after lastDate or equals then bonus available 
 		lastDateBonus = new Date();
+	}
+	
+	public void upLastDateBonus(){
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(lastDateBonus); 
+		c.add(Calendar.DATE, 1);
+		lastDateBonus = c.getTime();
+	}
+	
+	public void addGoldToUser(Integer gold){
+		user.setGold(user.getGold()+gold);
 	}
 
 	public Plant getPlant() {

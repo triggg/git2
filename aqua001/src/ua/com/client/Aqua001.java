@@ -1,8 +1,9 @@
 package ua.com.client;
 
-import ua.com.client.dto.Planet;
 import ua.com.client.dto.EveryDayBonus;
+import ua.com.client.dto.Planet;
 import ua.com.client.dto.Plant;
+import ua.com.client.dto.UserDTO;
 import ua.com.client.ui.PlantProgresDialog;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -13,7 +14,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -30,6 +30,8 @@ public class Aqua001 implements EntryPoint {
 	private static final String SEND_BUT = "Лети";
 	private static final String PLAN_BUT = "Растение";
 	private static final String BONUS_BUT = "Бонус";
+	private static final String GOLD_LABEL = "Монетки";
+	private static final String ACTION_LABEL = "Действия";
 
 	private static final String WIDTH_100 = "100%";
 	private static final String BUT_HEIGHT = "40px";
@@ -37,7 +39,8 @@ public class Aqua001 implements EntryPoint {
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
 
-	private Label bonusLabel = new Label();
+	private Label goldLabel = new Label();
+	private Label actionLabel = new Label();
 
 	PlantProgresDialog plantDialog = new PlantProgresDialog();
 
@@ -45,8 +48,10 @@ public class Aqua001 implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		initUser();
 		initPlant();
 		initPlanet();
+
 		DockLayoutPanel mainDockPanel = new DockLayoutPanel(Unit.PX);
 		mainDockPanel.setWidth("100%");
 		mainDockPanel.setHeight("870px");
@@ -60,41 +65,57 @@ public class Aqua001 implements EntryPoint {
 		RootPanel.get().add(mainDockPanel);
 	}
 
-		private void initPlanet() {
-			greetingService.getPlanet(new AsyncCallback<Planet>() {
+	private void initUser() {
+		greetingService.getUserDTO(new AsyncCallback<UserDTO>() {
+
 			@Override
-			public void onSuccess(Planet result) {				
-				Window.alert(toStringCustom(result));
-				
+			public void onSuccess(UserDTO result) {
+				goldLabel.setText(result.getGold().toString());
+				actionLabel.setText(result.getActionPoints().toString());
 			}
-			
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("aaa user problem");
+			}
+		});
+
+	}
+
+	private void initPlanet() {
+		greetingService.getPlanet(new AsyncCallback<Planet>() {
+			@Override
+			public void onSuccess(Planet result) {
+				Window.alert(toStringCustom(result));
+
+			}
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 	}
-	
+
 	private String toStringCustom(Planet planet) {
-		String resultStr = 
-			planet.getName() + "\n\n" +
-			planet.getParam0().toString() +"\n" + 
-			planet.getParam1().toString() +"\n" + 
-			planet.getParam2().toString() +"\n" + 
-			planet.getParam3().toString() +"\n" + 
-			planet.getParam4().toString() +"\n" + 
-			planet.getParam5().toString() +"\n" + 
-			planet.getParam6().toString() +"\n" + 
-			planet.getParam7().toString() +"\n" + 
-			planet.getParam8().toString() +"\n" + 
-			planet.getParam9().toString();
+		String resultStr = planet.getName() + "\n\n"
+				+ planet.getParam0().toString() + "\n"
+				+ planet.getParam1().toString() + "\n"
+				+ planet.getParam2().toString() + "\n"
+				+ planet.getParam3().toString() + "\n"
+				+ planet.getParam4().toString() + "\n"
+				+ planet.getParam5().toString() + "\n"
+				+ planet.getParam6().toString() + "\n"
+				+ planet.getParam7().toString() + "\n"
+				+ planet.getParam8().toString() + "\n"
+				+ planet.getParam9().toString();
 		return resultStr;
 	}
 
-		private void initPlant() {
-			greetingService.getPlant(new AsyncCallback<Plant>() {
+	private void initPlant() {
+		greetingService.getPlant(new AsyncCallback<Plant>() {
 
 			@Override
 			public void onSuccess(Plant result) {
@@ -108,22 +129,6 @@ public class Aqua001 implements EntryPoint {
 
 			}
 		});
-		
-		
-		greetingService.getBonus(new AsyncCallback<EveryDayBonus>() {
-			
-			@Override
-			public void onSuccess(EveryDayBonus result) {
-				bonusLabel.setText(result.getGoldBonus().toString());
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-
 	}
 
 	private Widget getCenterPanel() {
@@ -134,21 +139,28 @@ public class Aqua001 implements EntryPoint {
 		dockPanel.setHeight("600px");
 
 		dockPanel.addWest(getButtonPanel(), 100);
-		dockPanel.addNorth(getBonusPanel(), 40);
+		dockPanel.addNorth(getUserInfoPanel(), 40);
 
 		return dockPanel;
 	}
 
-	private Widget getBonusPanel() {
+	private Widget getUserInfoPanel() {
 		HorizontalPanel hPanel = new HorizontalPanel();
 		hPanel.setSpacing(5);
-		bonusLabel.getElement().setId("valueLabel");
-
-		Label tempLabel = new Label(BONUS_BUT);
-		tempLabel.getElement().setId("captionLabel");
-		hPanel.add(tempLabel);
-		hPanel.add(bonusLabel);
 		hPanel.getElement().setId("eastPanel");
+		// money
+		goldLabel.getElement().setId("valueLabel");
+		Label tempGoldLabel = new Label(GOLD_LABEL);
+		tempGoldLabel.getElement().setId("captionLabel");
+		// action
+		actionLabel.getElement().setId("valueLabel");
+		Label tempActionLabel = new Label(ACTION_LABEL);
+		tempActionLabel.getElement().setId("captionLabel");
+
+		hPanel.add(tempGoldLabel);
+		hPanel.add(goldLabel);
+		hPanel.add(tempActionLabel);
+		hPanel.add(actionLabel);
 		return hPanel;
 	}
 
@@ -161,7 +173,7 @@ public class Aqua001 implements EntryPoint {
 		Button growButton = new Button(GROW_BUT);
 		Button sendButton = new Button(SEND_BUT);
 		Button plantButton = new Button(PLAN_BUT);
-		//Button bonusButton = new Button(BONUS_BUT);
+		Button bonusButton = new Button(BONUS_BUT);
 
 		growButton.setWidth(WIDTH_100);
 		growButton.setHeight(BUT_HEIGHT);
@@ -172,13 +184,13 @@ public class Aqua001 implements EntryPoint {
 		plantButton.setWidth(WIDTH_100);
 		plantButton.setHeight(BUT_HEIGHT);
 
-		//bonusButton.setWidth(WIDTH_100);
-		//bonusButton.setHeight(BUT_HEIGHT);
+		bonusButton.setWidth(WIDTH_100);
+		bonusButton.setHeight(BUT_HEIGHT);
 
 		verticalPanel.add(growButton);
 		verticalPanel.add(sendButton);
 		verticalPanel.add(plantButton);
-		//verticalPanel.add(bonusButton);
+		verticalPanel.add(bonusButton);
 
 		plantButton.addClickHandler(new ClickHandler() {
 
@@ -196,7 +208,7 @@ public class Aqua001 implements EntryPoint {
 				Window.alert("Plant grow succesfully!!!");
 			}
 		});
-		
+
 		sendButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -206,13 +218,30 @@ public class Aqua001 implements EntryPoint {
 			}
 		});
 
-		// bonusButton.addClickHandler(new ClickHandler() {
-		//
-		// @Override
-		// public void onClick(ClickEvent event) {
-		//
-		// }
-		// });
+		bonusButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				greetingService.getBonus(new AsyncCallback<EveryDayBonus>() {
+
+					@Override
+					public void onSuccess(EveryDayBonus result) {
+						if(result.getGoldBonus() == 0){
+							Window.alert("Уже был заюзан бонус. Please w8 ");
+						}else{
+							Window.alert("Today bonus is "+result.getGoldBonus().toString()+" gold");
+							initUser();
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+			}
+		});
 
 		//
 		VerticalPanel returnPanel = new VerticalPanel();

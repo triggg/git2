@@ -3,6 +3,7 @@ package ua.com.client;
 import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Planet;
 import ua.com.client.dto.Plant;
+import ua.com.client.dto.UserDTO;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -17,6 +18,12 @@ public interface GreetingService extends RemoteService {
 	
 	Plant getPlant();
 	
+	/**
+	 * @return dayBonusMoney if possible else 0
+	 * */
 	EveryDayBonus getBonus();
+	
 	Planet getPlanet();
+	
+	UserDTO getUserDTO();
 }

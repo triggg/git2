@@ -1,6 +1,10 @@
 package ua.com.client.dto;
 
-public class UserDTO {
+import java.io.Serializable;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class UserDTO implements IsSerializable, Serializable {
 
 	private String name;
 	private Integer gold;

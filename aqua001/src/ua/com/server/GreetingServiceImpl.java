@@ -1,12 +1,14 @@
 package ua.com.server;
 
+import java.util.Date;
+
 import ua.com.client.GreetingService;
 import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Planet;
 import ua.com.client.dto.Plant;
+import ua.com.client.dto.UserDTO;
 import ua.com.server.factory.BonusFactory;
 import ua.com.server.factory.PlanetFactory;
-import ua.com.server.factory.PlantFactory;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -21,25 +23,31 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		return "Hello";
 	}
 
-
-
 	@Override
 	public Plant getPlant() {
 		return HardBase.getInstance().getPlant();
 	}
 
-
-
 	@Override
 	public EveryDayBonus getBonus() {
-		return BonusFactory.getEveryDayBonus();
+		if(HardBase.getInstance().getLastDateBonus().compareTo(new Date())<=0){
+			EveryDayBonus bonus = BonusFactory.getEveryDayBonus();
+			//add gold to user
+			HardBase.getInstance().addGoldToUser(bonus.getGoldBonus());
+			//up LastDateBonus
+			HardBase.getInstance().upLastDateBonus();
+			return bonus;
+		}		
+		return BonusFactory.getZeroDayBonus();
 	}
-
-
 
 	@Override
 	public Planet getPlanet() {
-		// TODO Auto-generated method stub
 		return PlanetFactory.getRandPlanet();
+	}
+
+	@Override
+	public UserDTO getUserDTO() {
+		return HardBase.getInstance().getUser();
 	}
 }

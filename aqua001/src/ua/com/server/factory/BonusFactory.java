@@ -11,8 +11,14 @@ public class BonusFactory {
 	public static EveryDayBonus getEveryDayBonus(){
 		EveryDayBonus bonus = new EveryDayBonus();
 		
-		bonus.setGoldBonus(random.nextInt(20)+5);
+		bonus.setGoldBonus((random.nextInt(5)+1)*5);
 		
+		return bonus;
+	}
+	
+	public static EveryDayBonus getZeroDayBonus(){
+		EveryDayBonus bonus = new EveryDayBonus();
+		bonus.setGoldBonus(0);
 		return bonus;
 	}
 
