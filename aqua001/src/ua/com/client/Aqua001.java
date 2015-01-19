@@ -5,6 +5,7 @@ import ua.com.client.dto.Planet;
 import ua.com.client.dto.Plant;
 import ua.com.client.dto.UserDTO;
 import ua.com.client.ui.PlantProgresDialog;
+import ua.com.client.ui.timer.TimerPanel;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -15,9 +16,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -30,8 +33,10 @@ public class Aqua001 implements EntryPoint {
 	private static final String SEND_BUT = "Лети";
 	private static final String PLAN_BUT = "Растение";
 	private static final String BONUS_BUT = "Бонус";
+	private static final String TIMER_BUT = "Тест таймер";
 	private static final String GOLD_LABEL = "Монетки";
 	private static final String ACTION_LABEL = "Действия";
+	
 
 	private static final String WIDTH_100 = "100%";
 	private static final String BUT_HEIGHT = "40px";
@@ -41,6 +46,7 @@ public class Aqua001 implements EntryPoint {
 
 	private Label goldLabel = new Label();
 	private Label actionLabel = new Label();
+	private FlowPanel timerPanel = new FlowPanel();
 
 	PlantProgresDialog plantDialog = new PlantProgresDialog();
 
@@ -138,12 +144,27 @@ public class Aqua001 implements EntryPoint {
 		dockPanel.setWidth("800px");
 		dockPanel.setHeight("600px");
 
-		dockPanel.addWest(getButtonPanel(), 100);
+		dockPanel.addWest(getButtonPanel(), 150);
 		dockPanel.addNorth(getUserInfoPanel(), 40);
+		dockPanel.add(getMainPanel());
+		
 
 		return dockPanel;
 	}
 
+	private Widget getMainPanel(){
+		ScrollPanel scrollPanel = new ScrollPanel();
+		scrollPanel.setWidth(WIDTH_100);
+		scrollPanel.setHeight(WIDTH_100);
+		
+	
+		timerPanel.setWidth("600px");
+		
+		
+		scrollPanel.add(timerPanel);
+		return scrollPanel;
+	}
+	
 	private Widget getUserInfoPanel() {
 		HorizontalPanel hPanel = new HorizontalPanel();
 		hPanel.setSpacing(5);
@@ -174,6 +195,7 @@ public class Aqua001 implements EntryPoint {
 		Button sendButton = new Button(SEND_BUT);
 		Button plantButton = new Button(PLAN_BUT);
 		Button bonusButton = new Button(BONUS_BUT);
+		Button timerButton = new Button(TIMER_BUT);
 
 		growButton.setWidth(WIDTH_100);
 		growButton.setHeight(BUT_HEIGHT);
@@ -186,11 +208,24 @@ public class Aqua001 implements EntryPoint {
 
 		bonusButton.setWidth(WIDTH_100);
 		bonusButton.setHeight(BUT_HEIGHT);
+		
+		timerButton.setWidth(WIDTH_100);
+		timerButton.setHeight(BUT_HEIGHT);
 
 		verticalPanel.add(growButton);
 		verticalPanel.add(sendButton);
 		verticalPanel.add(plantButton);
 		verticalPanel.add(bonusButton);
+		verticalPanel.add(timerButton);
+		
+		timerButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				timerPanel.add(new TimerPanel("test text"));
+
+			}
+		});
 
 		plantButton.addClickHandler(new ClickHandler() {
 
