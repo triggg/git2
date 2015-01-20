@@ -19,8 +19,8 @@ public class TimerWidget extends Label{
 	
 	public TimerWidget(int seconds){
 		this.seconds = seconds;
-		//this.getElement().setId("captionLabel");
-		
+		this.getElement().setId("timerLabel");
+		setText(Integer.toString(seconds));
 		
 	}
 

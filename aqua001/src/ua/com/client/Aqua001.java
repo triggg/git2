@@ -17,6 +17,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -144,7 +146,7 @@ public class Aqua001 implements EntryPoint {
 		dockPanel.setWidth("800px");
 		dockPanel.setHeight("600px");
 
-		dockPanel.addWest(getButtonPanel(), 150);
+		dockPanel.addWest(getButtonPanel(), 130);
 		dockPanel.addNorth(getUserInfoPanel(), 40);
 		dockPanel.add(getMainPanel());
 		
@@ -166,15 +168,25 @@ public class Aqua001 implements EntryPoint {
 	}
 	
 	private Widget getUserInfoPanel() {
+		HorizontalPanel hMainPanel = new HorizontalPanel();
+		hMainPanel.setWidth(WIDTH_100);
+		hMainPanel.setHeight(WIDTH_100);
+		hMainPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		hMainPanel.getElement().setId("eastPanel");
+		hMainPanel.setSpacing(5);
+		
 		HorizontalPanel hPanel = new HorizontalPanel();
 		hPanel.setSpacing(5);
-		hPanel.getElement().setId("eastPanel");
 		// money
 		goldLabel.getElement().setId("valueLabel");
+		goldLabel.setWidth("75px");
+		goldLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		Label tempGoldLabel = new Label(GOLD_LABEL);
 		tempGoldLabel.getElement().setId("captionLabel");
 		// action
 		actionLabel.getElement().setId("valueLabel");
+		actionLabel.setWidth("75px");
+		actionLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		Label tempActionLabel = new Label(ACTION_LABEL);
 		tempActionLabel.getElement().setId("captionLabel");
 
@@ -182,7 +194,9 @@ public class Aqua001 implements EntryPoint {
 		hPanel.add(goldLabel);
 		hPanel.add(tempActionLabel);
 		hPanel.add(actionLabel);
-		return hPanel;
+		
+		hMainPanel.add(hPanel);
+		return hMainPanel;
 	}
 
 	private Widget getButtonPanel() {

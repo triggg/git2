@@ -4,6 +4,7 @@ import ua.com.client.resources.ImageBundle;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -19,7 +20,7 @@ public class TimerPanel extends HorizontalPanel {
 
 	public TimerPanel() {
 		super();
-		
+
 		init();
 		timer.startTimer();
 	}
@@ -27,10 +28,12 @@ public class TimerPanel extends HorizontalPanel {
 	private void init() {
 		this.setHeight("50px");
 		this.setWidth(PANEL_WIDTH);
-		this.setSpacing(5);
+		//this.setSpacing(5);
 		this.getElement().setId("timerPanel");
-		
+
 		timer = new TimerWidget(100);
+		timer.setHeight("20px");
+		timerInfo.setHeight("20px");
 
 		ImageBundle bundle = GWT.create(ImageBundle.class);
 		Image image = new Image(bundle.timer());
@@ -39,18 +42,18 @@ public class TimerPanel extends HorizontalPanel {
 		image.setHeight(PANEL_HEIGHT);
 
 		VerticalPanel vPanel = new VerticalPanel();
-		vPanel.setSpacing(5);
+		// vPanel.setSpacing(5);
 		// vPanel.setWidth(PANEL_WIDTH);
 		vPanel.add(timer);
 		vPanel.add(timerInfo);
 		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-
+		vPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		// timerInfo.setWidth(PANEL_WIDTH);
 		timerInfo.getElement().setId("valueLabel");
 
 		//
 		HorizontalPanel hPanel = new HorizontalPanel();
-
+		hPanel.setSpacing(5);
 		hPanel.add(image);
 		hPanel.add(vPanel);
 
