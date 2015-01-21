@@ -30,20 +30,20 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public EveryDayBonus getBonus() {
-		if(HardBase.getInstance().getLastDateBonus().compareTo(new Date())<=0){
+		if (HardBase.getInstance().getLastDateBonus().compareTo(new Date()) <= 0) {
 			EveryDayBonus bonus = BonusFactory.getEveryDayBonus();
-			//add gold to user
+			// add gold to user
 			HardBase.getInstance().addGoldToUser(bonus.getGoldBonus());
-			//up LastDateBonus
+			// up LastDateBonus
 			HardBase.getInstance().upLastDateBonus();
 			return bonus;
-		}		
+		}
 		return BonusFactory.getZeroDayBonus();
 	}
 
 	@Override
 	public Planet getPlanet() {
-		return PlanetFactory.getRandPlanet();
+		return HardBase.getInstance().getPlanet();
 	}
 
 	@Override

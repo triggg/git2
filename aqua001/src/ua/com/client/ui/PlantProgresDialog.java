@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class PlantProgresDialog extends DialogBox {
 
 	private static final String BUT_P = "30px";
-	
+
 	private Label nameLabel = new Label();
 	private Label param0Label = new Label();
 	private Label param1Label = new Label();
@@ -75,15 +75,17 @@ public class PlantProgresDialog extends DialogBox {
 		return table;
 	}
 
-	private void addRowName(FlexTable table, int row, String text, final Label valueLabel) {
+	private void addRowName(FlexTable table, int row, String text,
+			final Label valueLabel) {
 		Label tempLabel = new Label(text);
 		tempLabel.getElement().setId("captionLabel");
 		table.setWidget(row, 0, tempLabel);
 		valueLabel.getElement().setId("valueLabel");
 		table.setWidget(row, 1, valueLabel);
 	}
-	
-	private void addRow(FlexTable table, int row, String text, final Label valueLabel) {
+
+	private void addRow(FlexTable table, int row, String text,
+			final Label valueLabel) {
 		addRowName(table, row, text, valueLabel);
 		// Button
 		Button up = new Button("+");
@@ -100,11 +102,11 @@ public class PlantProgresDialog extends DialogBox {
 			@Override
 			public void onClick(ClickEvent event) {
 				int temp = Integer.parseInt(valueLabel.getText());
-				if(temp<100){
-					temp+=10;
+				if (temp < 100) {
+					temp += 10;
 				}
-				if(temp>100){
-					temp=100;
+				if (temp > 100) {
+					temp = 100;
 				}
 				valueLabel.setText(Integer.toString(temp));
 			}
@@ -115,17 +117,17 @@ public class PlantProgresDialog extends DialogBox {
 			@Override
 			public void onClick(ClickEvent event) {
 				int temp = Integer.parseInt(valueLabel.getText());
-				if(temp>0){
-					temp-=10;
+				if (temp > 0) {
+					temp -= 10;
 				}
-				if(temp<0){
-					temp=0;
+				if (temp < 0) {
+					temp = 0;
 				}
 				valueLabel.setText(Integer.toString(temp));
 
 			}
 		});
-		
+
 		table.setWidget(row, 2, up);
 		table.setWidget(row, 3, down);
 	}

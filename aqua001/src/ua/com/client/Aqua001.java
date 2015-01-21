@@ -4,6 +4,7 @@ import ua.com.client.dto.EveryDayBonus;
 import ua.com.client.dto.Planet;
 import ua.com.client.dto.Plant;
 import ua.com.client.dto.UserDTO;
+import ua.com.client.ui.PlanetInfo;
 import ua.com.client.ui.PlantProgresDialog;
 import ua.com.client.ui.timer.TimerPanel;
 
@@ -38,7 +39,6 @@ public class Aqua001 implements EntryPoint {
 	private static final String TIMER_BUT = "Тест таймер";
 	private static final String GOLD_LABEL = "Монетки";
 	private static final String ACTION_LABEL = "Действия";
-	
 
 	private static final String WIDTH_100 = "100%";
 	private static final String BUT_HEIGHT = "40px";
@@ -49,6 +49,7 @@ public class Aqua001 implements EntryPoint {
 	private Label goldLabel = new Label();
 	private Label actionLabel = new Label();
 	private FlowPanel timerPanel = new FlowPanel();
+	private PlanetInfo planetInfo = new PlanetInfo();
 
 	PlantProgresDialog plantDialog = new PlantProgresDialog();
 
@@ -94,8 +95,8 @@ public class Aqua001 implements EntryPoint {
 		greetingService.getPlanet(new AsyncCallback<Planet>() {
 			@Override
 			public void onSuccess(Planet result) {
-				Window.alert(toStringCustom(result));
-
+				// Window.alert(toStringCustom(result));
+				planetInfo.setDto(result);
 			}
 
 			@Override
@@ -147,26 +148,36 @@ public class Aqua001 implements EntryPoint {
 		dockPanel.setHeight("600px");
 
 		dockPanel.addWest(getButtonPanel(), 130);
+		dockPanel.addEast(getPlanetInfoPanel(), 150);
 		dockPanel.addNorth(getUserInfoPanel(), 40);
 		dockPanel.add(getMainPanel());
-		
 
 		return dockPanel;
 	}
 
-	private Widget getMainPanel(){
+	private Widget getMainPanel() {
 		ScrollPanel scrollPanel = new ScrollPanel();
 		scrollPanel.setWidth(WIDTH_100);
 		scrollPanel.setHeight(WIDTH_100);
-		
-	
-		timerPanel.setWidth("600px");
-		
-		
+
+		timerPanel.setWidth("490px");
+
 		scrollPanel.add(timerPanel);
 		return scrollPanel;
 	}
-	
+
+	private Widget getPlanetInfoPanel() {
+		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setWidth(WIDTH_100);
+		verticalPanel.setHeight(WIDTH_100);
+		verticalPanel.setSpacing(5);
+		verticalPanel.getElement().setId("eastPanel");
+		//
+		verticalPanel.add(planetInfo);
+
+		return verticalPanel;
+	}
+
 	private Widget getUserInfoPanel() {
 		HorizontalPanel hMainPanel = new HorizontalPanel();
 		hMainPanel.setWidth(WIDTH_100);
@@ -174,7 +185,7 @@ public class Aqua001 implements EntryPoint {
 		hMainPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		hMainPanel.getElement().setId("eastPanel");
 		hMainPanel.setSpacing(5);
-		
+
 		HorizontalPanel hPanel = new HorizontalPanel();
 		hPanel.setSpacing(5);
 		// money
@@ -194,7 +205,7 @@ public class Aqua001 implements EntryPoint {
 		hPanel.add(goldLabel);
 		hPanel.add(tempActionLabel);
 		hPanel.add(actionLabel);
-		
+
 		hMainPanel.add(hPanel);
 		return hMainPanel;
 	}
@@ -222,7 +233,7 @@ public class Aqua001 implements EntryPoint {
 
 		bonusButton.setWidth(WIDTH_100);
 		bonusButton.setHeight(BUT_HEIGHT);
-		
+
 		timerButton.setWidth(WIDTH_100);
 		timerButton.setHeight(BUT_HEIGHT);
 
@@ -231,7 +242,7 @@ public class Aqua001 implements EntryPoint {
 		verticalPanel.add(plantButton);
 		verticalPanel.add(bonusButton);
 		verticalPanel.add(timerButton);
-		
+
 		timerButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -275,10 +286,12 @@ public class Aqua001 implements EntryPoint {
 
 					@Override
 					public void onSuccess(EveryDayBonus result) {
-						if(result.getGoldBonus() == 0){
+						if (result.getGoldBonus() == 0) {
 							Window.alert("Уже был заюзан бонус. Please w8 ");
-						}else{
-							Window.alert("Today bonus is "+result.getGoldBonus().toString()+" gold");
+						} else {
+							Window.alert("Today bonus is "
+									+ result.getGoldBonus().toString()
+									+ " gold");
 							initUser();
 						}
 					}

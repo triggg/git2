@@ -17,7 +17,7 @@ public class TimerPanel extends HorizontalPanel {
 
 	private Label timerInfo = new Label();
 	private TimerWidget timer;
-
+	
 	public TimerPanel() {
 		super();
 
